@@ -244,7 +244,7 @@ app.get("/mypost/:postID", (req, res) => {
         console.log(err);
       } else {
         if (foundBlog) {
-          res.render("mypost", { post: foundBlog });
+          res.render("myPost", { post: foundBlog });
         }
       }
     });
