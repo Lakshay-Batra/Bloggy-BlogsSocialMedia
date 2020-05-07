@@ -138,7 +138,7 @@ app.get("/home", (req, res) => {
             res.redirect("/home");
           }, 500);
         } else {
-          res.render("home", { homeStartingContent: descriptions.homeStartingContent(), posts: foundBlogs });
+          res.render("home", { homeStartingContent: descriptions.homeStartingContent(), posts: foundBlogs, name:req.user.firstName });
         }
       }
     });
