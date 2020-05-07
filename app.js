@@ -5,6 +5,7 @@ const ejs = require("ejs");
 const app = express();
 const _ = require("lodash");
 const descriptions = require(__dirname + "/descriptions.js");
+const dateTime = require(__dirname+"/date.js");
 const mongoose = require("mongoose");
 const flash = require('connect-flash');
 const session = require("express-session");
@@ -26,7 +27,10 @@ mongoose.connect("mongodb://localhost:27017/blogsDB", { useCreateIndex: true, us
 
 const blogSchema = new mongoose.Schema({
   title: String,
-  content: String
+  content: String,
+  name:String,
+  date:String,
+  time:String
 });
 const userSchema = new mongoose.Schema({
   firstName: String,
@@ -131,7 +135,10 @@ app.get("/home", (req, res) => {
         if (foundBlogs.length == 0) {
           const tempBlog = new Blog({
             title: "Demo Title",
-            content: "demo content"
+            content: "demo content",
+            name: "Owner",
+            date: "May 7, 2020",
+            time: "11:44 PM"
           });
           tempBlog.save();
           setTimeout(() => {
@@ -189,7 +196,10 @@ app.post("/compose", (req, res) => {
 
     const newBlog = new Blog({
       title: inputTitle,
-      content: inputContent
+      content: inputContent,
+      name: req.user.firstName,
+      date: dateTime.getDate(),
+      time: dateTime.getTime()
     });
     newBlog.save((err) => {
       if (!err) {
